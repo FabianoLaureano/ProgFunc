@@ -92,3 +92,42 @@ t6Fatorial = TestCase (assertEqual "t" 2432902008176640000 (fatorial 20))
 testesFatorial = TestList [t1Fatorial, t2Fatorial, t3Fatorial, t4Fatorial, t5Fatorial, t6Fatorial]
 
 ---------------------------------------------------------------------
+
+t1Fib = TestCase (assertEqual "t" 1 (fib 0))
+t2Fib = TestCase (assertEqual "t" 1 (fib 1))
+t3Fib = TestCase (assertEqual "t" 8 (fib 5))
+t4Fib = TestCase (assertEqual "t" 89 (fib 10))
+t5Fib = TestCase (assertEqual "t" 987 (fib 15))
+t6Fib = TestCase (assertEqual "t" 10946 (fib 20))
+t7Fib = TestCase (assertEqual "t" 121393 (fib 25))
+
+testesFib = TestList [t1Fib, t2Fib, t3Fib, t4Fib, t5Fib, t6Fib, t7Fib]
+
+---------------------------------------------------------------------
+
+t1Coprimo = TestCase (assertEqual "t" True (coprimo 5 7))
+t2Coprimo = TestCase (assertEqual "t" True (coprimo 11 49))
+t3Coprimo = TestCase (assertEqual "t" True (coprimo 36 91))
+t4Coprimo = TestCase (assertEqual "t" False (coprimo 234 658))
+t5Coprimo = TestCase (assertEqual "t" True (coprimo 20 21))
+t6Coprimo = TestCase (assertEqual "t" False (coprimo 0 5))
+t7Coprimo = TestCase (assertEqual "t" False (coprimo 15 63))
+t8Coprimo = TestCase (assertEqual "t" False (coprimo 66 8))
+
+testesCoprimo = TestList [t1Coprimo, t2Coprimo, t3Coprimo, t4Coprimo, t5Coprimo, t6Coprimo, t7Coprimo, t8Coprimo]
+
+---------------------------------------------------------------------
+
+t1Goldbach = TestCase (assertEqual "t" [] (goldbach 3))
+t2Goldbach = TestCase (assertEqual "t" [(5,73),(7,71),(11,67),(17,61),(19,59),(31,47),(37,41),(41,37),(47,31),(59,19),(61,17),(67,11),(71,7),(73,5)] (goldbach 78))
+t3Goldbach = TestCase (assertEqual "t" [(3,5),(5,3)] (goldbach 8))
+t4Goldbach = TestCase (assertEqual "t" [(3,61),(5,59),(11,53),(17,47),(23,41),(41,23),(47,17),(53,11),(59,5),(61,3)] (goldbach 64))
+t5Goldbach = TestCase (assertEqual "t" [(3,29),(13,19),(19,13),(29,3)] (goldbach 32))
+t6Goldbach = TestCase (assertEqual "t" [] (goldbach 97))
+t7Goldbach = TestCase (assertEqual "t" [(3,61),(5,59),(11,53),(17,47),(23,41),(41,23),(47,17),(53,11),(59,5),(61,3)] (goldbach 64))
+
+testesGoldbach = TestList [t1Goldbach, t2Goldbach, t3Goldbach, t4Goldbach, t5Goldbach, t6Goldbach, t7Goldbach]
+
+---------------------------------------------------------------------
+
+testesGerais = TestList [testesXor, testesImpl, testesEquiv, testesIsPrime, testesMdc, testesMmc, testesSquare, testesPow, testesFatorial, testesFib, testesCoprimo, testesGoldbach]
