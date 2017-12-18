@@ -2,12 +2,32 @@ import Test.HUnit
 
 -- comando para rodar os testes -> runTestTT ListaDeTestes
 
+data TData = TString String
+		     | TNumber Double
+		     | TBool Bool
+		     | TNull
+             deriving (Show, Eq, Ord)
+
+-- testar se os tipos dos parametros do xor são Booleanos
+tTipoP :: (Bool -> Bool -> Bool) -> TData -> TData -> Maybe Bool
+tTipoP f (TBool a) (TBool b) = Just (f a b)
+tTipoP f _ _ = Nothing
+
+a = TBool True 
+b = TNumber 5
+c = TBool False
+d = TNull
+
 t1Xor = TestCase (assertEqual "t" True (xor True False))
 t2Xor = TestCase (assertEqual "t" True (xor False True))
 t3Xor = TestCase (assertEqual "t" False (xor True True))
 t4Xor = TestCase (assertEqual "t" False (xor False False))
 
-testesXor = TestList [t1Xor, t2Xor, t3Xor, t4Xor]
+t5Xor = TestCase (assertEqual "teste do xor com Bool e Number" Nothing (tTipoP xor a b))
+t6Xor = TestCase (assertEqual "teste do xor com null e Number" Nothing (tTipoP xor d b))
+t7Xor = TestCase (assertEqual "teste do xor com Bool" (Just True) (tTipoP xor a c))
+
+testesXor = TestList [t1Xor, t2Xor, t3Xor, t4Xor, t5Xor, t6Xor, t7Xor]
 
 ---------------------------------------------------------------------
 
