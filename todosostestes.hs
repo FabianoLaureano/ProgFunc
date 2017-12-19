@@ -1,4 +1,5 @@
 import Test.HUnit
+import System.Environment
 
 {-
 - Usando os predicados not,and e or prontos de Haskell, implemente os predicados (funcoes) xor (or exclusivo),
@@ -58,7 +59,7 @@ isPrime 0 = False
 isPrime 1 = False
 isPrime 2 = True
 isPrime n | (length [x | x <- [2 .. n-1], mod n x == 0]) > 0 = False
-	| otherwise = True
+  | otherwise = True
 
 ----------------------------------------
 
@@ -101,7 +102,7 @@ mmc a b = div (a * b) (mdc a b)
 
 coprimo :: Int -> Int -> Bool
 coprimo a b | (mdc a b /= 1) = False
-	| otherwise = True
+  | otherwise = True
 
 {-
 - Calcula a conjectura de Goldbach, que diz que um numero par maior que 2 pode ser escrito como a soma de dois numeros primos. Ex: 28 = 5 + 23.
@@ -160,14 +161,24 @@ testesEquiv = TestList [t1Equiv, t2Equiv, t3Equiv, t4Equiv]
 t1IsPrime = TestCase (assertEqual "t1IsPrime" False (isPrime 0))
 t2IsPrime = TestCase (assertEqual "t2IsPrime" False (isPrime 1))
 t3IsPrime = TestCase (assertEqual "t3IsPrime" False (isPrime 4))
-t4IsPrime = TestCase (assertEqual "t4IsPrime" False (isPrime 1000))
+t4IsPrime = TestCase (assertEqual "t4IsPrime" False (isPrime 6))
+t5IsPrime = TestCase (assertEqual "t5IsPrime" False (isPrime 8))
+t6IsPrime = TestCase (assertEqual "t6IsPrime" False (isPrime 10))
+t7IsPrime = TestCase (assertEqual "t7IsPrime" False (isPrime 500))
+t8IsPrime = TestCase (assertEqual "t8IsPrime" False (isPrime 1000))
 
-t5IsPrime = TestCase (assertEqual "t5IsPrime" True (isPrime 2))
-t6IsPrime = TestCase (assertEqual "t6IsPrime" True (isPrime 7))
-t7IsPrime = TestCase (assertEqual "t7IsPrime" True (isPrime 991))
-t8IsPrime = TestCase (assertEqual "t8IsPrime" True (isPrime 392113))
+t9IsPrime = TestCase (assertEqual "t9IsPrime" True (isPrime 2))
+t10IsPrime = TestCase (assertEqual "t10IsPrime" True (isPrime 3))
+t11IsPrime = TestCase (assertEqual "t11IsPrime" True (isPrime 5))
+t12IsPrime = TestCase (assertEqual "t12IsPrime" True (isPrime 7))
+t13IsPrime = TestCase (assertEqual "t13IsPrime" True (isPrime 11))
+t14IsPrime = TestCase (assertEqual "t14IsPrime" True (isPrime 13))
+t15IsPrime = TestCase (assertEqual "t15IsPrime" True (isPrime 17))
+t16IsPrime = TestCase (assertEqual "t16IsPrime" True (isPrime 19))
+t17IsPrime = TestCase (assertEqual "t17IsPrime" True (isPrime 991))
+t18IsPrime = TestCase (assertEqual "t18IsPrime" True (isPrime 392113))
 
-testesIsPrime = TestList [t1IsPrime, t2IsPrime, t3IsPrime, t4IsPrime, t5IsPrime, t6IsPrime, t7IsPrime, t8IsPrime]
+testesIsPrime = TestList [t1IsPrime, t2IsPrime, t3IsPrime, t4IsPrime, t5IsPrime, t6IsPrime, t7IsPrime, t8IsPrime, t9IsPrime, t10IsPrime, t11IsPrime, t12IsPrime, t13IsPrime, t14IsPrime, t15IsPrime, t16IsPrime, t17IsPrime, t18IsPrime]
 
 ---------------------------------------------------------------------
 
@@ -175,16 +186,19 @@ t1Mdc = TestCase (assertEqual "t1Mdc" 1 (mdc 1 0))
 t2Mdc = TestCase (assertEqual "t2Mdc" 8 (mdc 24 16))
 t3Mdc = TestCase (assertEqual "t3Mdc" 1 (mdc 25 26))
 t4Mdc = TestCase (assertEqual "t4Mdc" 9 (mdc 27 9))
+t5Mdc = TestCase (assertEqual "t5Mdc" 12 (mdc 12 36))
 
-testesMdc = TestList [t1Mdc, t2Mdc, t3Mdc, t4Mdc]
+testesMdc = TestList [t1Mdc, t2Mdc, t3Mdc, t4Mdc, t5Mdc]
 
 ---------------------------------------------------------------------
 
 t1Mmc = TestCase (assertEqual "t1Mmc" 0 (mmc 1 0))
 t2Mmc = TestCase (assertEqual "t2Mmc" 0 (mmc 0 20))
 t3Mmc = TestCase (assertEqual "t3Mmc" 12 (mmc 4 6))
+t4Mmc = TestCase (assertEqual "t4Mmc" 36 (mmc 12 9))
+t5Mmc = TestCase (assertEqual "t5Mmc" 2 (mmc 2 2))
 
-testesMmc = TestList [t1Mmc, t2Mmc, t3Mmc]
+testesMmc = TestList [t1Mmc, t2Mmc, t3Mmc, t4Mmc, t5Mmc]
 
 ---------------------------------------------------------------------
 
@@ -195,8 +209,9 @@ t4Square = TestCase (assertEqual "t4Square" 0 (square (0)))
 t5Square = TestCase (assertEqual "t5Square" 1 (square (1)))
 t6Square = TestCase (assertEqual "t6Square" 25 (square (5)))
 t7Square = TestCase (assertEqual "t7Square" 100 (square (10)))
+t8Square = TestCase (assertEqual "t8Square" 1522756 (square (1234)))
 
-testesSquare = TestList [t1Square, t2Square, t3Square, t4Square, t5Square, t6Square, t7Square]
+testesSquare = TestList [t1Square, t2Square, t3Square, t4Square, t5Square, t6Square, t7Square, t8Square]
 
 ---------------------------------------------------------------------
 
@@ -262,12 +277,13 @@ testesGoldbach = TestList [t1Goldbach, t2Goldbach, t3Goldbach, t4Goldbach, t5Gol
 
 testesGerais = TestList [testesXor, testesImpl, testesEquiv, testesIsPrime, testesMdc, testesMmc, testesSquare, testesPow, testesFatorial, testesFib, testesCoprimo, testesGoldbach]
 
-
 main = do
   tests <- (runTestTT testesGerais)
   let resultados = words (showCounts tests)
+  let matricula = "XXXXXXXX"
   let totalDeTestes = resultados !! 1
   let testesComErros = resultados !! 5
   let testesComFalhas = resultados !! 7
-  let testeQuePassaram = read (resultados !! 1) - read (resultados !! 5) -  read (resultados !! 7)
-  print ("--------------------------------------------------------------------------------------")
+  let testesQuePassaram = ((read (resultados !! 1)) - (read (resultados !! 5)) -  (read (resultados !! 7)))
+  let jsonFile = ("{matricula:" ++ matricula ++ ",totalTestes:" ++ totalDeTestes++ ",erros:" ++ testesComErros ++ ",falhas:" ++ testesComFalhas ++ ",passaram:" ++ (show testesQuePassaram) ++ "}")
+  writeFile "result.json" jsonFile
